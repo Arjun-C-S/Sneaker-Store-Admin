@@ -5,7 +5,6 @@ import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 
 describe('CategoryService', () => {
   let categoryService: CategoryService;
-  let saveMock: jest.Mock;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -43,7 +42,6 @@ describe('CategoryService', () => {
       .compile();
 
     categoryService = module.get<CategoryService>(CategoryService);
-    saveMock = module.get(getRepositoryToken(CategoryTable)).save as jest.Mock;
   });
 
   it('should be defined', () => {
