@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoryModule } from './category/category.module';
+import { CategoryTable } from './category/schema/category.schema';
 
 @Module({
   imports: [
@@ -18,11 +20,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
           username: config.get('MARIADB_USER'),
           password: config.get('MARIADB_PASSWORD'),
           database: config.get('MARIADB_DATABASE'),
-          entities: [],
+          entities: [CategoryTable],
           synchronize: config.get('APP_ENV') === 'development',
         };
       },
     }),
+    CategoryModule,
   ],
   controllers: [],
   providers: [],
