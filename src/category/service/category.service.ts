@@ -23,10 +23,7 @@ export class CategoryService {
     }
   }
 
-  async updateCategory(
-    categoryId: number,
-    categoryDetails: CategoryDetailsDTO,
-  ) {
+  updateCategory(categoryId: number, categoryDetails: CategoryDetailsDTO) {
     try {
       this.categoryTable.update(categoryId, categoryDetails);
       return { message: 'category updated successfully' };
@@ -37,7 +34,7 @@ export class CategoryService {
     }
   }
 
-  async removeCategory(categoryId: number) {
+  removeCategory(categoryId: number) {
     try {
       this.categoryTable.delete(categoryId);
       return { message: 'category deleted successfully' };
