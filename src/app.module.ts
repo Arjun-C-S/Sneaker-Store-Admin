@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryModule } from './category/category.module';
-import { CategoryTable } from './category/schema/category.schema';
+import { CategoryModule } from './modules/category/category.module';
+import { CategoryTable } from './modules/category/schema/category.schema';
 
 @Module({
   imports: [
