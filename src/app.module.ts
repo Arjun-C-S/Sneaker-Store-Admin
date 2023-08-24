@@ -8,6 +8,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AuthTable } from './modules/auth/schema/auth.schema';
 import { SessionModule } from './modules/session/session.module';
 import { SessionTable } from './modules/session/schema/session.schema';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ProxyAuthInterceptor } from './modules/interceptors/verify-session.interface';
 
 @Module({
   imports: [
@@ -35,6 +37,11 @@ import { SessionTable } from './modules/session/schema/session.schema';
     SessionModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ProxyAuthInterceptor,
+    },
+  ],
 })
 export class AppModule {}

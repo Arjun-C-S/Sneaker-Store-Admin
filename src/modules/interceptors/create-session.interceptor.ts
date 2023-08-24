@@ -17,11 +17,13 @@ export class SessionInterceptor implements NestInterceptor {
       map(async (data) => {
         const response: Response = context.switchToHttp().getResponse();
         const userId = data.userId;
+        delete data['userId'];
         const sessionId = await this.sessionService.createSession(userId);
         const cookieOptions = {
           expires: new Date(Date.now() + 10 * 1000),
         };
         response.cookie('ADMIN_SESSION', sessionId, cookieOptions);
+        return data;
       }),
     );
   }

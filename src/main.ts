@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 
 function setupSwagger(app) {
   const configService: ConfigService = app.get(ConfigService);
@@ -25,6 +26,7 @@ function setupSwagger(app) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
   const configService: ConfigService = app.get(ConfigService);
 
   if (configService.get('APP_ENV') === 'development') {
