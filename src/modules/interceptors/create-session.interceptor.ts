@@ -7,6 +7,7 @@ import {
 import { SessionService } from '../session/service/session.service';
 import { map } from 'rxjs';
 import { Response } from 'express';
+import { SESSION } from '../common/constants';
 
 @Injectable()
 export class SessionInterceptor implements NestInterceptor {
@@ -22,7 +23,7 @@ export class SessionInterceptor implements NestInterceptor {
         const cookieOptions = {
           expires: new Date(Date.now() + 10 * 1000),
         };
-        response.cookie('ADMIN_SESSION', sessionId, cookieOptions);
+        response.cookie(SESSION.SESSION_NAME, sessionId, cookieOptions);
         return data;
       }),
     );
