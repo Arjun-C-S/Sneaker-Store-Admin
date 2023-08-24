@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { ConfigType, DatabaseConfig } from 'env.interface';
+import { ConfigType } from 'env.interface';
 import { AuthTable } from 'src/modules/auth/schema/auth.schema';
 import { CategoryTable } from 'src/modules/category/schema/category.schema';
 import { SessionTable } from 'src/modules/session/schema/session.schema';
