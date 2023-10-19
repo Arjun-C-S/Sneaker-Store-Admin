@@ -6,9 +6,13 @@ export interface DatabaseConfig {
   MARIADB_DATABASE: string;
 }
 
+export interface MongoDbConfig {
+  MONGODB_URI: string;
+}
+
 export interface AppConfig {
   PORT: number;
   APP_ENV: string;
 }
 
-export type ConfigType = DatabaseConfig & AppConfig;
+export type ConfigType = DatabaseConfig & MongoDbConfig & AppConfig;
