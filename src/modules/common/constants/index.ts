@@ -11,4 +11,5 @@ export const APPLICATION = {
 
 export const SESSION = {
   SESSION_NAME: 'ADMIN_SESSION',
+  SESSION_EXPIRY: 60 * 1000 * 10,
 };

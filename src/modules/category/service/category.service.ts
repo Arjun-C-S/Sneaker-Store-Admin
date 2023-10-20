@@ -1,20 +1,20 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CategoryTable } from '../schema/category.schema';
-import { Repository } from 'typeorm';
 import { CategoryDetailsDTO } from '../dto/category-update.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { CategoryModel, CategoryDocument } from '../schema/category.schema';
 
 @Injectable()
 export class CategoryService {
   constructor(
-    @InjectRepository(CategoryTable)
-    private categoryTable: Repository<CategoryTable>,
+    @InjectModel('Category') private readonly categoryModel: CategoryModel,
   ) {}
 
   addCategory(categoryDetails: CategoryDetailsDTO) {
     try {
-      const category = this.categoryTable.create(categoryDetails);
-      this.categoryTable.save(category);
+      const category: CategoryDocument = new this.categoryModel(
+        categoryDetails,
+      );
+      category.save();
       return { message: 'category added successfully' };
     } catch (error) {
       throw new UnprocessableEntityException('category not created', {
@@ -25,7 +25,9 @@ export class CategoryService {
 
   updateCategory(categoryId: number, categoryDetails: CategoryDetailsDTO) {
     try {
-      this.categoryTable.update(categoryId, categoryDetails);
+      this.categoryModel.findOneAndUpdate({ categoryId }, categoryDetails, {
+        new: true,
+      });
       return { message: 'category updated successfully' };
     } catch (error) {
       throw new UnprocessableEntityException('category not updated', {
@@ -36,7 +38,7 @@ export class CategoryService {
 
   removeCategory(categoryId: number) {
     try {
-      this.categoryTable.delete(categoryId);
+      this.categoryModel.deleteOne({ categoryId });
       return { message: 'category deleted successfully' };
     } catch (error) {
       throw new UnprocessableEntityException('category not deleted', {
@@ -46,10 +48,10 @@ export class CategoryService {
   }
 
   async getCategory(categoryId: number) {
-    return await this.categoryTable.findOneBy({ id: categoryId });
+    return await this.categoryModel.findById({ id: categoryId });
   }
 
   async getAllCategories() {
-    return await this.categoryTable.find();
+    return await this.categoryModel.find();
   }
 }

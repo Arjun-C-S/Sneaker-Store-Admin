@@ -21,7 +21,7 @@ export class SessionInterceptor implements NestInterceptor {
         delete data['userId'];
         const sessionId = await this.sessionService.createSession(userId);
         const cookieOptions = {
-          expires: new Date(Date.now() + 10 * 1000),
+          expires: new Date(Date.now() + SESSION.SESSION_EXPIRY),
         };
         response.cookie(SESSION.SESSION_NAME, sessionId, cookieOptions);
         return data;

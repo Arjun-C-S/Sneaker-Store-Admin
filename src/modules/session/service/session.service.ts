@@ -28,7 +28,7 @@ export class SessionService {
 
   async deleteSession(sessionId: string) {
     try {
-      await this.sessionTable.delete(sessionId);
+      await this.sessionTable.delete({ sessionId });
       return { message: 'Session deleted successfully' };
     } catch (error) {
       throw new UnprocessableEntityException('Error in deleting session');
@@ -48,7 +48,7 @@ export class SessionService {
       }
       return { message: 'Session Verified' };
     } catch (error) {
-      throw new UnprocessableEntityException('Error in verifying session');
+      throw new UnprocessableEntityException('Session verification failed');
     }
   }
 }

@@ -1,3 +1,4 @@
+import { SESSION } from 'src/modules/common/constants';
 import {
   Entity,
   Column,
@@ -26,6 +27,6 @@ export class SessionTable {
 
   @BeforeInsert()
   setDefaultExpiresAt() {
-    this.expires_at = new Date(Date.now() + 10 * 1000); // 10 seconds for testing
+    this.expires_at = new Date(Date.now() + SESSION.SESSION_EXPIRY);
   }
 }
