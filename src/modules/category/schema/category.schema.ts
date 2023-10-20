@@ -19,10 +19,10 @@ export type CategoryDocument = HydratedDocument<Category>;
 export type CategoryModel = Model<CategoryDocument, Category>;
 export const CategorySchema = SchemaFactory.createForClass(Category);
 
-// Creating a 9 digit random id for the product data
+// Creating a 9 digit random id for the category data
 CategorySchema.pre('save', function (next) {
   if (this.isNew) {
-    this.id = Math.floor(Math.random() * 1000000000);
+    this.id = Math.floor(Math.random() * 1000000000000000);
   }
   next();
 });

@@ -1,10 +1,4 @@
-import {
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { NestInterceptor, ExecutionContext, CallHandler, Injectable, NotFoundException } from '@nestjs/common';
 import { SessionService } from '../session/service/session.service';
 import { Request } from 'express';
 

@@ -1,26 +1,34 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CategoryService } from './category.service';
+import { ProductService } from './product.service';
 import { getModelToken } from '@nestjs/mongoose';
 
-describe('CategoryService', () => {
-  let service: CategoryService;
+describe('ProductService', () => {
+  let service: ProductService;
 
   const categoryModel = {
+    create: jest.fn(),
+  };
+
+  const productModel = {
     create: jest.fn(),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CategoryService,
+        ProductService,
         {
           provide: getModelToken('Category'),
           useValue: categoryModel,
         },
+        {
+          provide: getModelToken('Product'),
+          useValue: productModel,
+        },
       ],
     }).compile();
 
-    service = module.get<CategoryService>(CategoryService);
+    service = module.get<ProductService>(ProductService);
   });
 
   it('should be defined', () => {

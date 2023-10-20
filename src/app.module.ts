@@ -10,6 +10,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ProxyAuthInterceptor } from './modules/interceptors/verify-session.interface';
 import { configureTypeorm } from './modules/common/setup/typeorm';
 import { configureMongoose } from './modules/common/setup/mongoose';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -19,17 +20,16 @@ import { configureMongoose } from './modules/common/setup/mongoose';
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService<DatabaseConfig>) =>
-        configureTypeorm(configService),
+      useFactory: (configService: ConfigService<DatabaseConfig>) => configureTypeorm(configService),
     }),
     MongooseModule.forRootAsync({
       inject: [ConfigService],
-      useFactory: (configService: ConfigService<DatabaseConfig>) =>
-        configureMongoose(configService),
+      useFactory: (configService: ConfigService<DatabaseConfig>) => configureMongoose(configService),
     }),
     CategoryModule,
     AuthModule,
     SessionModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [

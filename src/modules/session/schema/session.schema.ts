@@ -1,11 +1,5 @@
 import { SESSION } from 'src/modules/common/constants';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  Generated,
-  BeforeInsert,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Generated, BeforeInsert } from 'typeorm';
 
 @Entity()
 export class SessionTable {
