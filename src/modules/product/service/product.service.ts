@@ -53,4 +53,38 @@ export class ProductService {
       throw error;
     }
   }
+
+  async removeProduct(productId: number): Promise<{ message: string }> {
+    try {
+      const product = await this.productModel.findOne({ id: productId });
+      if (!product) {
+        throw new NotFoundException(`Product not found | <ProductId: ${productId}>`);
+      }
+
+      await this.productModel.deleteOne({ id: productId });
+      return { message: 'product deleted successfully' };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getProduct(productId: number): Promise<ProductDocument> {
+    try {
+      const product = await this.productModel.findOne({ id: productId });
+      if (!product) {
+        throw new NotFoundException(`Product not found | <ProductId: ${productId}>`);
+      }
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllProducts(): Promise<ProductDocument[]> {
+    try {
+      return await this.productModel.find();
+    } catch (error) {
+      throw error;
+    }
+  }
 }

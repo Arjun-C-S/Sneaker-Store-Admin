@@ -2,10 +2,14 @@ import { Injectable, NotFoundException, UnprocessableEntityException } from '@ne
 import { CategoryDetailsDTO } from '../dto/category.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { CategoryModel, CategoryDocument } from '../schema/category.schema';
+import { ProductModel } from 'src/modules/product/schema/product.schema';
 
 @Injectable()
 export class CategoryService {
-  constructor(@InjectModel('Category') private readonly categoryModel: CategoryModel) {}
+  constructor(
+    @InjectModel('Category') private readonly categoryModel: CategoryModel,
+    @InjectModel('Product') private readonly productModel: ProductModel,
+  ) {}
 
   async addCategory(categoryDetails: CategoryDetailsDTO): Promise<{ message: string }> {
     try {
@@ -42,7 +46,12 @@ export class CategoryService {
         throw new NotFoundException(`Category not found | <CategoryId: ${categoryId}>`);
       }
 
-      await this.categoryModel.deleteOne({ categoryId });
+      const isProducts = await this.productModel.findOne({ categoryId });
+      if (isProducts) {
+        throw new UnprocessableEntityException(`Category cannot be deleted | Products present`);
+      }
+
+      await this.categoryModel.deleteOne({ id: categoryId });
       return { message: 'category deleted successfully' };
     } catch (error) {
       throw error;
