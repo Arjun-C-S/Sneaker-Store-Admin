@@ -3,6 +3,7 @@ import { CategoryService } from './service/category.service';
 import { CategoryDetailsDTO } from './dto/category.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { CategoryDocument } from './schema/category.schema';
+import { ProductDocument } from '../product/schema/product.schema';
 
 @ApiTags('Category')
 @Controller('category')
@@ -35,5 +36,10 @@ export class CategoryController {
   @Get()
   async getAllCategories(): Promise<CategoryDocument[]> {
     return await this.categoryService.getAllCategories();
+  }
+
+  @Get('/:categoryId/all-products')
+  async getProductsForCategory(@Param('categoryId') categoryId: number): Promise<ProductDocument[]> {
+    return await this.categoryService.getProductsForCategory(categoryId);
   }
 }

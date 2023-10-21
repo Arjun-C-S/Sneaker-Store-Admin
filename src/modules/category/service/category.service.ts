@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, UnprocessableEntityException } from '@ne
 import { CategoryDetailsDTO } from '../dto/category.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { CategoryModel, CategoryDocument } from '../schema/category.schema';
-import { ProductModel } from 'src/modules/product/schema/product.schema';
+import { ProductDocument, ProductModel } from 'src/modules/product/schema/product.schema';
 
 @Injectable()
 export class CategoryService {
@@ -73,6 +73,15 @@ export class CategoryService {
   async getAllCategories(): Promise<CategoryDocument[]> {
     try {
       return await this.categoryModel.find();
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getProductsForCategory(categoryId: number): Promise<ProductDocument[]> {
+    try {
+      await this.getCategory(categoryId);
+      return await this.productModel.find({ categoryId });
     } catch (error) {
       throw error;
     }
